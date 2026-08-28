@@ -215,29 +215,78 @@ img,svg{
   height:auto;
 }
 </style>
-</head>
+<style id="v16-ui">
+html,body{width:100%;max-width:100%;overflow-x:hidden!important;-webkit-text-size-adjust:100%}
+body{min-width:0!important;overscroll-behavior-x:none}
+input,select,textarea{font-size:16px!important;max-width:100%!important;min-width:0!important}
+.app{width:100%!important;max-width:100%;min-width:0!important}
+.brand{display:none!important}
+.profile-menu-wrap{position:relative;display:flex}
+.profile-btn{width:44px!important;height:44px!important;min-width:44px!important;padding:0!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:var(--surface);border:1px solid var(--line)}
+.profile-btn .avatar{width:30px;height:30px;border-radius:50%}
+.profile-menu{position:absolute;right:0;top:50px;width:190px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow2);padding:7px;z-index:300}
+.profile-menu button{width:100%;text-align:left;border:0;background:transparent;color:var(--ink);border-radius:10px;padding:12px;font-weight:750}
+.menu-status{padding:8px 11px;font-size:10px;color:var(--muted);border-bottom:1px solid var(--line);margin-bottom:4px}
+.menu-status strong{display:block;color:var(--ink);font-size:12px}
+.greeting{font-size:23px;font-weight:900;color:var(--ink);letter-spacing:-.04em;margin:3px 0 12px}
+.add-expense-home{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:62px;border:0;border-radius:18px;background:linear-gradient(135deg,var(--brand),var(--violet));color:#fff;font-size:16px;font-weight:900;box-shadow:0 12px 28px rgba(62,91,254,.22);margin-bottom:13px}
+.add-expense-home .plus{font-size:24px}
+.nav{padding:9px 7px calc(10px + env(safe-area-inset-bottom))!important;bottom:0!important}
+.nav .tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:9px!important}
+.nav .tab svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.9}
+.image-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}
+.image-btn{min-height:44px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);border-radius:11px;font-weight:750}
+.expense-image-preview{display:flex;gap:7px;align-items:center;margin-top:8px}
+.expense-image-thumb{width:74px;height:74px;object-fit:cover;border-radius:11px;border:1px solid var(--line)}
+.signed-out-screen{min-height:100dvh;display:grid;place-items:center;padding:24px 15px}
+.signin-card{width:min(390px,100%);text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:30px 20px;box-shadow:var(--shadow2)}
+.signin-logo{width:82px;height:82px;border-radius:25px;margin:0 auto 15px;display:grid;place-items:center;background:linear-gradient(140deg,var(--brand),var(--violet));color:#fff;font-size:30px;font-weight:950}
+.signin-title{font-size:26px;font-weight:950;color:var(--ink);letter-spacing:-.05em}
+.signin-sub{font-size:10px;color:var(--muted);margin:5px 0 20px}
+@media(max-width:620px){
+body{overflow:hidden!important}
+.app{height:100dvh;display:flex;flex-direction:column;padding:calc(7px + env(safe-area-inset-top)) 9px calc(88px + env(safe-area-inset-bottom));overflow:hidden}
+.topbar{flex:0 0 auto}
+.page{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:8px}
+.formgrid,.account-grid{grid-template-columns:1fr!important}
+.chips{grid-template-columns:1fr!important}
+.card,.account,.expense,.item{min-width:0;max-width:100%;overflow:hidden}
+.dialog{width:calc(100vw - 18px)!important;max-width:calc(100vw - 18px)!important}
+.dialog .modal{max-height:calc(100dvh - 24px);overflow:auto}
+}
+</style></head>
 <body>
 <div class="splash" id="splash"><div class="splash-inner"><div class="splash-logo">₿</div><div class="splash-title">NeonLedger</div><div class="splash-sub">SHARED • LIVE • PRIVATE FINANCE</div><div class="splash-load"><i></i></div></div></div>
 
 <div class="app">
 <header class="topbar">
-<div class="brand-mark">₿</div><div class="brand"><h1>NeonLedger</h1><p>SHARED • LIVE • PRIVATE FINANCE</p></div><div class="grow"></div>
-<div class="user-pill" id="userPill" hidden><span class="avatar" id="userAvatar">?</span><span class="user-label" id="userLabel">Guest</span></div>
-<button class="icon" id="refreshBtn" aria-label="Refresh data" title="Refresh">↻</button>
-<button class="icon" id="themeBtn" aria-label="Toggle theme">☾</button>
-<button class="btn small" id="authBtn">Sign in</button>
-</header>
-<nav class="nav">
-<button class="tab active" data-page="overview">Home</button><button class="tab" data-page="expenses">Expenses</button><button class="tab" data-page="accounts">Cards</button><button class="tab" data-page="budget">Budget</button><button class="tab" data-page="more">More</button>
+<div class="brand-mark">₿</div><div class="grow"></div>
+<div class="profile-menu-wrap">
+<button class="profile-btn" id="profileBtn" aria-label="Menu"><span class="avatar" id="userAvatarMenu">☰</span></button>
+<div class="profile-menu hidden" id="profileMenu">
+<div class="menu-status"><strong id="menuUserName">Account</strong><span>NeonLedger</span></div>
+<button id="menuTheme">☾ <span id="themeText">Theme</span></button>
+<button id="menuRefresh">↻ Refresh</button>
+<button id="menuSignout">↪ Sign out</button>
+</div></div></header>
+<nav class="nav" id="nav">
+<button class="tab active" data-page="overview"><svg viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></button>
+<button class="tab" data-page="expenses"><svg viewBox="0 0 24 24"><path d="M6 3h12v18H6zM9 7h6M9 11h6M9 15h4"/></svg><span>Expenses</span></button>
+<button class="tab" data-page="accounts"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg><span>Cards</span></button>
+<button class="tab" data-page="budget"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-8M22 19V3"/></svg><span>Budget</span></button>
 </nav>
 
-<section class="page active" id="overview"><div class="grid">
+<section class="page active" id="overview"><div class="greeting" id="helloUser">Hi</div>
+<button class="add-expense-home" id="homeAddExpense"><span class="plus">＋</span>Add Expense</button><div class="grid">
 <div class="card hero"><div class="eyebrow">Available to spend</div><div id="available" class="balance">₹0.00</div><div id="summaryCaption" class="muted">Your shared monthly money.</div><div class="metrics"><div class="metric"><span>Income</span><b id="incomeMetric">₹0</b></div><div class="metric"><span>Spent</span><b id="spentMetric">₹0</b></div><div class="metric"><span>Budget left</span><b id="budgetMetric">₹0</b></div></div></div>
 <div class="card"><div class="head"><h2>Monthly income</h2><span id="monthName" class="muted"></span></div><div class="field"><label>Month</label><input id="month" type="month"></div><div class="field" style="margin-top:9px"><label>Income / starting money</label><input id="income" type="number" min="0" step=".01" inputmode="decimal"></div><button class="btn primary" id="saveIncome" style="width:100%;margin-top:10px">Save Income</button></div>
-</div><div class="card" style="margin-top:13px"><div class="head"><h2>Accounts & cards</h2><button class="btn small tonal" id="goAccounts">＋ Add</button></div><div class="account-grid" id="dashboardAccounts"></div></div></section>
+</div><div class="card" style="margin-top:13px"><div class="head"><h2>Accounts & cards</h2><button class="btn small tonal" id="goAccounts">＋ Add Account</button></div><div class="account-grid" id="dashboardAccounts"></div></div></section>
 
 <section class="page" id="expenses">
-<div class="card"><div class="head"><h2>New expense</h2><span id="expenseStatus" class="status"></span></div><form id="expenseForm"><div class="formgrid"><div class="field"><label>Date</label><input id="date" type="date" required></div><div class="field"><label>Time</label><input id="time" type="time"></div><div class="field"><label>Amount</label><input id="amount" type="number" min=".01" step=".01" inputmode="decimal" required></div><div class="field"><label>Paid from</label><select id="accountSelect" required></select></div><div class="field"><label>Category</label><select id="category" required></select></div><div class="field"><label>Payment</label><select id="payment"><option>UPI</option><option>Cash</option><option>Credit Card</option><option>Debit Card</option><option>Bank Transfer</option><option>Wallet</option><option>Auto-debit</option><option>Other</option></select></div><div class="field"><label>Merchant / Payee</label><input id="merchant" maxlength="100"></div><div class="field"><label>Note</label><input id="note" maxlength="300"></div></div><button class="btn primary" style="width:100%;margin-top:11px">＋ Add Expense</button></form></div>
+<div class="card"><div class="head"><h2>New expense</h2><span id="expenseStatus" class="status"></span></div><form id="expenseForm"><div class="formgrid"><div class="field"><label>Date</label><input id="date" type="date" required></div><div class="field"><label>Time</label><input id="time" type="time"></div><div class="field"><label>Amount</label><input id="amount" type="number" min=".01" step=".01" inputmode="decimal" required></div><div class="field"><label>Paid from</label><select id="accountSelect" required></select></div><div class="field"><label>Category</label><select id="category" required></select></div><div class="field"><label>Payment</label><select id="payment"><option>UPI</option><option>Cash</option><option>Credit Card</option><option>Debit Card</option><option>Bank Transfer</option><option>Wallet</option><option>Auto-debit</option><option>Other</option></select></div><div class="field" style="grid-column:1/-1"><label>Receipt / expense image</label>
+<input id="imageInput" type="file" accept="image/*" hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden>
+<div class="image-actions"><button type="button" class="image-btn" id="uploadImageBtn">Upload from Files</button><button type="button" class="image-btn" id="cameraImageBtn">Take Photo</button></div><div id="imagePreview" class="expense-image-preview"></div></div>
+<div class="field"><label>Merchant / Payee</label><input id="merchant" maxlength="100"></div><div class="field"><label>Note</label><input id="note" maxlength="300"></div></div><button class="btn primary" style="width:100%;margin-top:11px">＋ Add Expense</button></form></div>
 <div class="card" style="margin-top:13px"><div class="head"><h2>Expenses</h2><span id="count" class="muted"></span></div><div class="toolbar"><div class="field"><label>From</label><input id="from" type="date"></div><div class="field"><label>To</label><input id="to" type="date"></div><div class="field"><label>Category</label><select id="filterCat"></select></div></div><div class="field" style="margin:8px 0 11px"><label>Search</label><input id="search" placeholder="Search expenses…"></div><div class="list" id="expenseList"></div></div></section>
 
 <section class="page" id="accounts"><div class="card"><div class="head"><h2>Cards & accounts</h2><span class="muted">Track every balance</span></div><form id="accountForm"><div class="formgrid"><div class="field"><label>Name</label><input id="accountName" maxlength="50" placeholder="Main Bank / Visa / Cash" required></div><div class="field"><label>Type</label><select id="accountType"><option>Bank Account</option><option>Credit Card</option><option>Debit Card</option><option>Cash</option><option>Wallet</option><option>Savings</option><option>Investment</option><option>Other</option></select></div><div class="field"><label>Starting balance</label><input id="accountBalance" type="number" step=".01" inputmode="decimal" required></div><div class="field"><label>Accent</label><select id="accountAccent"><option value="brand">Blue</option><option value="violet">Violet</option><option value="gold">Gold</option><option value="green">Green</option></select></div></div><button class="btn primary" style="width:100%;margin-top:11px">＋ Add Account</button></form></div><div class="card" style="margin-top:13px"><div class="head"><h2>Current balances</h2></div><div class="account-grid" id="accountGrid"></div></div></section>
@@ -247,7 +296,7 @@ img,svg{
 <section class="page" id="more"><div class="card"><div class="head"><h2>Categories</h2><span class="muted">Shared</span></div><form id="catForm" style="display:flex;gap:7px"><input id="newCat" maxlength="50" placeholder="New category" required><button class="btn primary">Add</button></form><div id="catList" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px"></div></div><div class="card" style="margin-top:13px"><div class="head"><h2>Backup</h2><button class="btn small" id="backupBtn">Export JSON</button></div><div class="note">Save a JSON copy whenever you want a portable backup.</div><div style="margin-top:10px"><button class="btn small" id="signoutMore">Sign out</button></div></div><div class="card" style="margin-top:13px"><div class="head"><h2>Connection</h2><span id="connectionStatus" class="muted">Checking…</span></div><div class="note">Refresh uses your current Supabase session and reloads the shared household data.</div></div></section>
 </div>
 
-<div class="toast" id="toast"></div>
+<section class="signed-out-screen hidden" id="signedOut"><div class="signin-card"><div class="signin-logo">₿</div><div class="signin-title">NeonLedger</div><div class="signin-sub">SHARED • LIVE • PRIVATE FINANCE</div><button class="btn primary" id="signedInBtn">Sign in</button></div></section><div class="toast" id="toast"></div>
 
 <dialog class="dialog" id="authDialog"><div class="modal"><div class="head"><div style="font-size:16px;font-weight:850">Sign in</div><button class="btn small" id="closeAuth">Close</button></div><div class="field"><label>Email</label><input id="authEmail" type="email" autocomplete="username"></div><div class="field" style="margin-top:9px"><label>Password</label><input id="authPassword" type="password" autocomplete="current-password"></div><button class="btn primary" id="doAuth" style="width:100%;margin-top:11px">Sign in</button><div id="authMsg" class="msg"></div></div></dialog>
 
@@ -286,12 +335,13 @@ function restorePage(id){const target=document.querySelector(`.tab[data-page="${
 function nameFor(uid){return members[uid]||(uid===user?.id?(user?.user_metadata?.display_name||(user?.email||"").split("@")[0]):"Unknown user")}
 function authPaint(){
   const ok=!!session;
-  $("authBtn").textContent=ok?"Sign out":"Sign in";
-  $("userPill").hidden=!ok;
-  $("signoutMore").textContent=ok?"Sign out":"Sign in";
-  if(ok){const nm=nameFor(user.id);$("userLabel").textContent=nm;$("userAvatar").textContent=(nm[0]||"?").toUpperCase()}
+  $("userPill")?.classList.toggle("hidden",!ok);
+  if(ok){const nm=memberName(user.id);if($("userLabel"))$("userLabel").textContent=nm;if($("userAvatar"))$("userAvatar").textContent=(nm[0]||"?").toUpperCase();$("userAvatarMenu").textContent=(nm[0]||"?").toUpperCase();$("menuUserName").textContent=nm;}
 }
 function render(){
+  if(!session){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$("nav").classList.add("hidden");$("signedOut").classList.remove("hidden");return}
+  $("nav").classList.remove("hidden");$("signedOut").classList.add("hidden");
+  $("helloUser").textContent="Hi, "+memberName(user.id);
   const opts=data.categories.map(c=>`<option>${esc(c)}</option>`).join("");
   $("category").innerHTML=opts;$("budgetCat").innerHTML=opts;$("filterCat").innerHTML=`<option value="">All categories</option>`+opts;
   $("accountSelect").innerHTML=data.accounts.length?data.accounts.map(a=>`<option value="${esc(a.id)}">${esc(a.name)}</option>`).join(""):`<option value="">Add an account first</option>`;
@@ -306,7 +356,7 @@ function render(){
   const from=$("from").value,to=$("to").value,fc=$("filterCat").value,q=$("search").value.trim().toLowerCase();
   const list=data.expenses.filter(e=>(!from||e.date>=from)&&(!to||e.date<=to)&&(!fc||e.category===fc)&&(!q||[e.category,e.merchant,e.note,e.payment].join(" ").toLowerCase().includes(q))).sort((a,b)=>(String(b.date)+String(b.time||"")).localeCompare(String(a.date)+String(a.time||"")));
   $("count").textContent=list.length+" entries";
-  $("expenseList").innerHTML=list.length?list.map(e=>`<article class="expense"><div class="row"><div style="min-width:0"><div class="expense-title">${esc(e.category)}${e.merchant?" · "+esc(e.merchant):""}</div><div class="muted">${esc(e.date)}${e.time?" · "+esc(e.time):""}</div></div><div class="amount">${money(e.amount)}</div></div><div class="chips"><div class="chip blue">From <strong>${esc(data.accounts.find(a=>a.id===e.account_id)?.name||"Unknown account")}</strong></div><div class="chip purple">Added by <strong>${esc(nameFor(e.added_by))}</strong></div><div class="chip">${esc(e.payment||"Payment")}</div>${e.note?`<div class="chip">${esc(e.note)}</div>`:""}</div><div style="text-align:right;margin-top:7px"><button class="btn small" data-del-expense="${esc(e.id)}">Delete</button></div></article>`).join(""):`<div class="empty">${session?"No expenses found.":"Sign in to view expenses."}</div>`;
+  $("expenseList").innerHTML=list.length?list.map(e=>`<article class="expense"><div class="row"><div style="min-width:0"><div class="expense-title">${esc(e.category)}${e.merchant?" · "+esc(e.merchant):""}</div><div class="muted">${esc(e.date)}${e.time?" · "+esc(e.time):""}</div></div><div class="amount">${money(e.amount)}</div></div><div class="chips"><div class="chip blue">From <strong>${esc(data.accounts.find(a=>a.id===e.account_id)?.name||"Unknown account")}</strong></div><div class="chip purple">Added by <strong>${esc(nameFor(e.added_by))}</strong></div><div class="chip">${esc(e.payment||"Payment")}</div>${e.note?`<div class="chip">${esc(e.note)}</div>`:""}${e.attachment_url?`<a class="chip" href="${esc(e.attachment_url)}" target="_blank" rel="noopener">📷 Receipt</a>`:""}</div><div style="text-align:right;margin-top:7px"><button class="btn small" data-del-expense="${esc(e.id)}">Delete</button></div></article>`).join(""):`<div class="empty">${session?"No expenses found.":"Sign in to view expenses."}</div>`;
   const bm=$("budgetMonth").value||monthNow,rows=Object.entries(data.budgets).filter(([k])=>k.startsWith(bm+"|"));
   $("budgetMonthLabel").textContent=bm;$("budgetList").innerHTML=rows.length?rows.map(([k,lim])=>{const cat=k.slice(bm.length+1),sp=data.expenses.filter(e=>String(e.date).slice(0,7)===bm&&e.category===cat).reduce((s,e)=>s+Number(e.amount||0),0),left=Number(lim)-sp,p=Math.min(100,Number(lim)?sp/Number(lim)*100:0);return `<div class="item"><div class="row"><div><div class="title">${esc(cat)}</div><div class="muted">${money(sp)} spent of ${money(lim)}</div></div><div class="money ${left<0?"bad":"good"}">${money(left)}</div></div><div class="progress"><div class="bar" style="width:${p}%"></div></div><div style="text-align:right;margin-top:6px"><button class="btn small" data-del-budget="${esc(k)}">Remove</button></div></div>`}).join(""):`<div class="empty">${session?`No budgets for ${esc(bm)}.`:"Sign in to view budgets."}</div>`;
   $("catList").innerHTML=data.categories.map(c=>`<span style="border:1px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--surface2);font-size:10px;color:var(--ink3)">${esc(c)}${defaults.includes(c)?"":` <button data-del-cat="${esc(c)}" style="border:0;background:none;color:var(--red);padding-left:4px">×</button>`}</span>`).join("");
@@ -366,6 +416,20 @@ async function ensureName(){
   $("displayName").value=(user.email||"").split("@")[0];if(!$("nameDialog").open)$("nameDialog").showModal();
 }
 
+$("profileBtn").onclick=()=>{$("profileMenu").classList.toggle("hidden");};
+document.addEventListener("click",e=>{if(!e.target.closest(".profile-menu-wrap"))$("profileMenu")?.classList.add("hidden")});
+$("menuTheme").onclick=()=>{const dark=document.documentElement.dataset.theme==="dark";if(dark){document.documentElement.removeAttribute("data-theme");localStorage.setItem(THEME,"light");$("themeText").textContent="Light mode"}else{document.documentElement.setAttribute("data-theme","dark");localStorage.setItem(THEME,"dark");$("themeText").textContent="Dark mode"}};
+$("menuRefresh").onclick=async()=>{const pg=activePage();$("profileMenu").classList.add("hidden");try{await establishSession();restorePage(pg);toast("Refreshed")}catch{toast("Refresh failed")}};
+$("menuSignout").onclick=async()=>{ $("profileMenu").classList.add("hidden"); session=null;user=null;stopRealtime();data={categories:[...defaults],accounts:[],expenses:[],incomes:{},budgets:{}};householdId=null;members={};render();toast("Signed out");await sb.auth.signOut()};
+$("signedInBtn").onclick=()=>$("authDialog").showModal();
+$("uploadImageBtn").onclick=()=>$("imageInput").click();
+$("cameraImageBtn").onclick=()=>$("cameraInput").click();
+$("imageInput").onchange=e=>previewImage(e.target.files?.[0]);
+$("cameraInput").onchange=e=>previewImage(e.target.files?.[0]);
+function previewImage(f){window.neonReceipt=f||null;$("imagePreview").innerHTML=f?`<img class="expense-image-thumb" src="${URL.createObjectURL(f)}" alt="Receipt"> <button type="button" class="btn small" id="removeImage">Remove</button>`:"";}
+document.addEventListener("click",e=>{if(e.target.id==="removeImage"){window.neonReceipt=null;$("imagePreview").innerHTML="";$("imageInput").value="";$("cameraInput").value=""}});
+$("homeAddExpense").onclick=()=>{$("date").value=new Date().toISOString().slice(0,10);$("time").value=new Date().toTimeString().slice(0,5);restorePage("expenses");setTimeout(()=>$("amount").focus(),80)};
+$("goAccounts").onclick=()=>restorePage("accounts");
 $("refreshBtn").onclick=async()=>{
   const page=activePage();
   try{await establishSession();restorePage(page);toast("Refreshed")}catch{render();$("connectionStatus").textContent=session?"Sync failed · showing local copy":"Not signed in";toast("Could not refresh")}
@@ -406,7 +470,16 @@ $("joinHouse").onclick=async()=>{
 };
 $("saveDisplayName").onclick=async()=>{const nm=$("displayName").value.trim();if(!nm)return;const r=await sb.from("household_members").update({display_name:nm}).eq("household_id",householdId).eq("user_id",user.id);if(r.error){$("nameMsg").textContent=r.error.message;return}members[user.id]=nm;$("nameDialog").close();await refreshCloud()};
 $("saveIncome").onclick=async()=>{const m=$("month").value,v=Number($("income").value);if(!m||!Number.isFinite(v)||v<0)return;const r=await sb.from("monthly_income").upsert({household_id:householdId,month:m+"-01",amount:v},{onConflict:"household_id,month"});if(r.error)return;await refreshCloud()};
-$("expenseForm").onsubmit=async e=>{e.preventDefault();const amount=Number($("amount").value);if(!Number.isFinite(amount)||amount<=0||!$("accountSelect").value){$("expenseStatus").textContent="Add an account first.";return}const row={household_id:householdId,added_by:user.id,date:$("date").value,time:$("time").value||null,amount,account_id:$("accountSelect").value,category:$("category").value,merchant:$("merchant").value.trim()||null,payment:$("payment").value,note:$("note").value.trim()||null};const r=await sb.from("expenses").insert(row);if(r.error){$("expenseStatus").textContent=r.error.message;return}e.target.reset();$("date").value=today;await refreshCloud();$("expenseStatus").textContent="Saved";setTimeout(()=>$("expenseStatus").textContent="",1000)};
+$("expenseForm").onsubmit=async e=>{e.preventDefault();const amount=Number($("amount").value);if(!Number.isFinite(amount)||amount<=0||!$("accountSelect").value){$("expenseStatus").textContent="Add an account first.";return}let attachment_url=null;
+if(window.neonReceipt&&householdId){
+  const f=window.neonReceipt;if(f.size<=6*1024*1024){
+    const ext=(f.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,6)||"jpg";
+    const path=householdId+"/"+crypto.randomUUID()+"."+ext;
+    const up=await sb.storage.from("expense-receipts").upload(path,f,{contentType:f.type||"image/jpeg",upsert:false});
+    if(!up.error)attachment_url=sb.storage.from("expense-receipts").getPublicUrl(path).data.publicUrl;
+  }
+}
+const row={household_id:householdId,added_by:user.id,date:$("date").value,time:$("time").value||null,amount,account_id:$("accountSelect").value,category:$("category").value,merchant:$("merchant").value.trim()||null,payment:$("payment").value,note:$("note").value.trim()||null,attachment_url};const r=await sb.from("expenses").insert(row);if(r.error){$("expenseStatus").textContent=r.error.message;return}e.target.reset();$("date").value=today;await refreshCloud();$("expenseStatus").textContent="Saved";setTimeout(()=>$("expenseStatus").textContent="",1000)};
 $("expenseList").onclick=async e=>{const id=e.target.dataset.delExpense;if(!id)return;const r=await sb.from("expenses").delete().eq("id",id).eq("household_id",householdId);if(!r.error)await refreshCloud()};
 $("accountForm").onsubmit=async e=>{e.preventDefault();const name=$("accountName").value.trim(),bal=Number($("accountBalance").value);if(!name||!Number.isFinite(bal))return;const r=await sb.from("accounts").insert({household_id:householdId,name,type:$("accountType").value,starting_balance:bal,accent:$("accountAccent").value});if(r.error)return;e.target.reset();await refreshCloud()};
 $("budgetForm").onsubmit=async e=>{e.preventDefault();const m=$("budgetMonth").value,c=$("budgetCat").value,v=Number($("budgetAmount").value);if(!m||!c||!Number.isFinite(v)||v<0)return;const r=await sb.from("budgets").upsert({household_id:householdId,month:m+"-01",category:c,amount:v},{onConflict:"household_id,month,category"});if(r.error)return;e.target.reset();$("budgetMonth").value=m;await refreshCloud()};
@@ -420,7 +493,7 @@ document.addEventListener("click",async e=>{
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));t.classList.add("active");$(t.dataset.page).classList.add("active")});
 ["month","budgetMonth"].forEach(id=>$(id).onchange=render);["from","to","filterCat","search"].forEach(id=>$(id).oninput=render);
 $("month").value=monthNow;$("budgetMonth").value=monthNow;$("date").value=today;
-load();if(localStorage.getItem(THEME)==="dark")document.documentElement.setAttribute("data-theme","dark");render();
+load();if(localStorage.getItem(THEME)==="dark"){document.documentElement.setAttribute("data-theme","dark");$("themeText").textContent="Dark mode"}else{$("themeText").textContent="Light mode"}render();
 
 if(sb){
   sb.auth.onAuthStateChange((event,newSession)=>{
@@ -447,4 +520,5 @@ establishSession().catch(()=>{
 });
 setTimeout(()=>{const s=$("splash");if(s){s.style.opacity="0";s.style.pointerEvents="none";setTimeout(()=>s.remove(),250)}},900);
 })();
+
 </script>
