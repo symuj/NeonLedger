@@ -54,7 +54,36 @@ input,select,textarea{font-size:16px!important;max-width:100%!important;min-widt
 .category-search{margin-bottom:7px}.image-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}.image-btn{min-height:44px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);border-radius:11px;font-weight:750}.expense-image-preview{display:flex;gap:7px;align-items:center;margin-top:8px}.expense-image-thumb{width:74px;height:74px;object-fit:cover;border-radius:11px;border:1px solid var(--line)}
 .signed-out-screen{position:fixed;inset:0;z-index:500;min-height:100dvh;display:grid;place-items:center;padding:24px 15px;background:var(--bg)}.signin-card{width:min(390px,100%);text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:30px 20px;box-shadow:var(--shadow2)}.signin-logo{width:82px;height:82px;border-radius:25px;margin:0 auto 15px;display:grid;place-items:center;background:linear-gradient(140deg,var(--brand),var(--violet));color:#fff;font-size:30px;font-weight:950}.signin-title{font-size:26px;font-weight:950;color:var(--ink);letter-spacing:-.05em}.signin-sub{font-size:10px;color:var(--muted);margin:5px 0 20px}
 @media(max-width:620px){body{overflow:hidden!important}.app{height:100dvh;display:flex;flex-direction:column;padding:calc(7px + env(safe-area-inset-top)) 9px calc(88px + env(safe-area-inset-bottom));overflow:hidden}.topbar{flex:0 0 auto}.page{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:8px}.formgrid,.account-grid{grid-template-columns:1fr!important}.chips{grid-template-columns:1fr!important}.card,.account,.expense,.item{min-width:0;max-width:100%;overflow:hidden}.dialog{width:calc(100vw - 18px)!important;max-width:calc(100vw - 18px)!important}.dialog .modal{max-height:calc(100dvh - 24px);overflow:auto}}
-</style></head>
+</style>
+<style id="v18-2-expense-history">
+.expense-history-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.expense-history-title h2{margin:0;color:var(--ink);font-size:17px}
+.expense-history-list{display:flex;flex-direction:column;gap:9px}
+.expense-history-item{background:var(--surface);border:1px solid var(--line);border-radius:17px;padding:12px;cursor:pointer;box-shadow:var(--shadow);overflow:hidden}
+.expense-history-item:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.expense-history-summary{display:flex;align-items:center;gap:9px}
+.expense-history-main{min-width:0;flex:1}
+.expense-history-name{font-size:13px;font-weight:850;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.expense-history-meta{font-size:10px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.expense-history-amount{font-size:14px;font-weight:950;color:var(--ink);white-space:nowrap}
+.expense-history-chevron{font-size:20px;color:var(--muted);transition:transform .18s;flex:none}
+.expense-history-item.expanded .expense-history-chevron{transform:rotate(90deg)}
+.expense-history-details{display:none;border-top:1px solid var(--line);margin-top:10px;padding-top:10px}
+.expense-history-item.expanded .expense-history-details{display:block}
+.expense-history-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.expense-history-detail{background:var(--surface2);border-radius:10px;padding:8px;min-width:0}
+.expense-history-detail small{display:block;font-size:9px;color:var(--muted);margin-bottom:2px}
+.expense-history-detail strong{display:block;font-size:11px;color:var(--ink);word-break:break-word}
+.expense-receipt-image{display:block;width:100%;max-height:330px;object-fit:contain;border-radius:14px;border:1px solid var(--line);background:var(--surface2);margin-top:10px}
+.expense-receipt-label{text-align:center;color:var(--muted);font-size:10px;margin-top:5px}
+.expense-empty-state{text-align:center;padding:30px 12px;color:var(--muted);font-size:12px}
+.view-all-expenses{width:100%;margin-top:10px}
+.expense-filter-card{margin-top:13px}
+@media(max-width:620px){
+  .expense-history-grid{grid-template-columns:1fr 1fr}
+  .expense-receipt-image{max-height:280px}
+}
+</head>
 <body>
 <div class="splash" id="splash"><div class="splash-inner"><div class="splash-logo">₿</div><div class="splash-title">NeonLedger</div><div class="splash-sub">SHARED • LIVE • PRIVATE FINANCE</div><div class="splash-load"><i></i></div></div></div>
 
@@ -77,9 +106,20 @@ input,select,textarea{font-size:16px!important;max-width:100%!important;min-widt
 </div><div class="card" style="margin-top:13px"><div class="head"><h2>Accounts & cards</h2><button class="btn small tonal" id="goAccounts">＋ Add</button></div><div class="account-grid" id="dashboardAccounts"></div></div></section>
 
 <section class="page" id="expenses">
-<div class="card"><div class="head"><h2>New expense</h2><span id="expenseStatus" class="status"></span></div><form id="expenseForm"><div class="formgrid"><div class="field"><label>Date</label><input id="date" type="date" required></div><div class="field"><label>Time</label><input id="time" type="time"></div><div class="field"><label>Amount</label><input id="amount" type="number" min=".01" step=".01" inputmode="decimal" required></div><div class="field"><label>Paid from</label><select id="accountSelect" required></select></div><div class="field"><label>Category</label><input id="categorySearch" class="category-search" placeholder="Type to find a category" autocomplete="off"><select id="category" required></select></div><div class="field"><label>Payment</label><select id="payment"><option>UPI</option><option>Cash</option><option>Credit Card</option><option>Debit Card</option><option>Bank Transfer</option><option>Wallet</option><option>Auto-debit</option><option>Other</option></select></div><div class="field" style="grid-column:1/-1"><label>Receipt / expense image</label><input id="imageInput" type="file" accept="image/*" hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><div class="image-actions"><button type="button" class="image-btn" id="uploadImageBtn">Upload from Files</button><button type="button" class="image-btn" id="cameraImageBtn">Take Photo</button></div><div id="imagePreview" class="expense-image-preview"></div></div><div class="field"><label>Merchant / Payee</label><input id="merchant" maxlength="100"></div><div class="field"><label>Note</label><input id="note" maxlength="300"></div></div><button class="btn primary" style="width:100%;margin-top:11px">＋ Add Expense</button></form></div>
+<div class="card"><div class="head"><h2>New expense</h2><span id="expenseStatus" class="status"></span></div><form id="expenseForm"><div class="formgrid"><div class="field"><label>Date</label><input id="date" type="date" required></div><div class="field"><label>Time</label><input id="time" type="time"></div><div class="field"><label>Amount</label><input id="amount" type="number" min=".01" step=".01" inputmode="decimal" required></div><div class="field"><label>Paid from</label><select id="accountSelect" required></select></div><div class="field"><label>Category</label><input id="categorySearch" class="category-search" placeholder="Type to find a category" autocomplete="off"><select id="category" required></select></div><div class="field"><label>Payment</label><select id="payment"><option>UPI</option><option>Cash</option><option>Credit Card</option><option>Debit Card</option><option>Bank Transfer</option><option>Wallet</option><option>Auto-debit</option><option>Other</option></select></div><div class="field" style="grid-column:1/-1"><label>Receipt / expense image</label><input id="imageInput" type="file" accept="image/*" hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><div class="image-actions"><button type="button" class="image-btn" id="uploadImageBtn">Upload from Files</button><button type="button" class="image-btn" id="cameraImageBtn">Take Photo</button></div><div id="imagePreview" class="expense-image-preview"></div></div><div class="field"><label>Merchant / Payee</label><input id="merchant" maxlength="100"></div><div class="field"><label>Note</label><input id="note" maxlength="300"></div></div><button class="btn primary" style="width:100%;margin-top:11px">＋ Add Expense</button></form><button class="btn tonal view-all-expenses" id="viewAllExpenses" type="button">View All Expenses</button></div>
 <div class="card" style="margin-top:13px"><div class="head"><h2>Expenses</h2><span id="count" class="muted"></span></div><div class="toolbar"><div class="field"><label>From</label><input id="from" type="date"></div><div class="field"><label>To</label><input id="to" type="date"></div><div class="field"><label>Category</label><select id="filterCat"></select></div></div><div class="field" style="margin:8px 0 11px"><label>Search</label><input id="search" placeholder="Search expenses…"></div><div class="list" id="expenseList"></div></div></section>
 
+
+<section class="page" id="allExpenses">
+  <div class="expense-history-title">
+    <h2>All Expenses</h2>
+    <button class="btn small primary" id="allExpensesAdd" type="button">＋ Add Expense</button>
+  </div>
+  <div class="card expense-filter-card">
+    <div class="head"><span class="muted">Every expense in your household</span><span id="allExpenseCount" class="muted"></span></div>
+    <div class="expense-history-list" id="allExpenseList"></div>
+  </div>
+</section>
 <section class="page" id="accounts"><div class="card"><div class="head"><h2>Cards & accounts</h2><span class="muted">Track every balance</span></div><form id="accountForm"><div class="formgrid"><div class="field"><label>Name</label><input id="accountName" maxlength="50" placeholder="Main Bank / Visa / Cash" required></div><div class="field"><label>Type</label><select id="accountType"><option>Bank Account</option><option>Credit Card</option><option>Debit Card</option><option>Cash</option><option>Wallet</option><option>Savings</option><option>Investment</option><option>Other</option></select></div><div class="field"><label>Starting balance</label><input id="accountBalance" type="number" step=".01" inputmode="decimal" required></div><div class="field"><label>Accent</label><select id="accountAccent"><option value="brand">Blue</option><option value="violet">Violet</option><option value="gold">Gold</option><option value="green">Green</option></select></div></div><button class="btn primary" style="width:100%;margin-top:11px">＋ Add Account</button></form></div><div class="card" style="margin-top:13px"><div class="head"><h2>Current balances</h2></div><div class="account-grid" id="accountGrid"></div></div></section>
 
 <section class="page" id="budget"><div class="card"><div class="head"><h2>Category budgets</h2><span class="muted">Shared monthly limits</span></div><form id="budgetForm"><div class="formgrid"><div class="field"><label>Month</label><input id="budgetMonth" type="month"></div><div class="field"><label>Category</label><select id="budgetCat"></select></div><div class="field"><label>Limit</label><input id="budgetAmount" type="number" min="0" step=".01" inputmode="decimal" required></div><div class="field" style="display:flex;align-items:end"><button class="btn primary" style="width:100%">Set Budget</button></div></div></form></div><div class="card" style="margin-top:13px"><div class="head"><h2>Budget status</h2><span id="budgetMonthLabel" class="muted"></span></div><div class="list" id="budgetList"></div></div></section>
@@ -131,6 +171,47 @@ function authPaint(){
   $("signoutMore").textContent=ok?"Sign out":"Sign in";
   if(ok){const nm=nameFor(user.id);$("userLabel").textContent=nm;$("userAvatar").textContent=(nm[0]||"?").toUpperCase()}
 }
+
+function v182ExpenseCard(e){
+  const account=(data.accounts||[]).find(a=>a.id===e.account_id)?.name||"Unknown account";
+  const who=nameFor(e.added_by);
+  const receipt=e.attachment_url||e.receipt_url||null;
+  const eid=esc(e.id);
+  return `<article class="expense-history-item" tabindex="0" role="button" aria-expanded="false" data-v182-expense="${eid}">
+    <div class="expense-history-summary">
+      <div class="expense-history-main">
+        <div class="expense-history-name">${esc(e.category||"Expense")}${e.merchant?" · "+esc(e.merchant):""}</div>
+        <div class="expense-history-meta">${esc(e.date||"")}${e.time?" · "+esc(e.time):""} · ${esc(who)}</div>
+      </div>
+      <div class="expense-history-amount">${money(e.amount)}</div>
+      <span class="expense-history-chevron" aria-hidden="true">›</span>
+    </div>
+    <div class="expense-history-details">
+      <div class="expense-history-grid">
+        <div class="expense-history-detail"><small>Amount</small><strong>${money(e.amount)}</strong></div>
+        <div class="expense-history-detail"><small>Category</small><strong>${esc(e.category||"—")}</strong></div>
+        <div class="expense-history-detail"><small>Account / Card</small><strong>${esc(account)}</strong></div>
+        <div class="expense-history-detail"><small>Added by</small><strong>${esc(who)}</strong></div>
+        <div class="expense-history-detail"><small>Date</small><strong>${esc(e.date||"—")}</strong></div>
+        <div class="expense-history-detail"><small>Time</small><strong>${esc(e.time||"—")}</strong></div>
+        <div class="expense-history-detail"><small>Payment</small><strong>${esc(e.payment||"—")}</strong></div>
+        <div class="expense-history-detail"><small>Merchant / Payee</small><strong>${esc(e.merchant||"—")}</strong></div>
+      </div>
+      ${e.note?`<div class="expense-history-detail" style="margin-top:7px"><small>Note</small><strong>${esc(e.note)}</strong></div>`:""}
+      ${receipt?`<a href="${esc(receipt)}" target="_blank" rel="noopener"><img class="expense-receipt-image" src="${esc(receipt)}" alt="Receipt image"><div class="expense-receipt-label">Tap image to open full size</div></a>`:""}
+      <div style="text-align:right;margin-top:8px"><button class="btn small" type="button" data-del-history-expense="${eid}">Delete</button></div>
+    </div>
+  </article>`;
+}
+function v182RenderHistory(){
+  const el=$("allExpenseList");
+  if(!el)return;
+  const list=[...(data.expenses||[])].sort((a,b)=>
+    (String(b.date||"")+String(b.time||"")).localeCompare(String(a.date||"")+String(a.time||""))
+  );
+  $("allExpenseCount").textContent=list.length+(list.length===1?" expense":" expenses");
+  el.innerHTML=list.length?list.map(v182ExpenseCard).join(""):`<div class="expense-empty-state">No expenses yet.</div>`;
+}
 function render(){
   const signed=!!session;
   $("appShell")?.classList.toggle("hidden",!signed);
@@ -158,6 +239,8 @@ function render(){
   $("catList").innerHTML=data.categories.map(c=>`<span style="border:1px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--surface2);font-size:10px;color:var(--ink3)">${esc(c)}${defaults.includes(c)?"":` <button data-del-cat="${esc(c)}" style="border:0;background:none;color:var(--red);padding-left:4px">×</button>`}</span>`).join("");
   authPaint();
 }
+  v182RenderHistory();
+
 function stopRealtime(){if(realtime){try{realtime.unsubscribe()}catch{}realtime=null}}
 async function refreshCloud(){
   if(!sb||!session||!householdId)return;
@@ -255,12 +338,84 @@ $("joinHouse").onclick=async()=>{
 };
 $("saveDisplayName").onclick=async()=>{const nm=$("displayName").value.trim();if(!nm)return;const r=await sb.from("household_members").update({display_name:nm}).eq("household_id",householdId).eq("user_id",user.id);if(r.error){$("nameMsg").textContent=r.error.message;return}members[user.id]=nm;$("nameDialog").close();await refreshCloud()};
 $("saveIncome").onclick=async()=>{const m=$("month").value,v=Number($("income").value);if(!m||!Number.isFinite(v)||v<0)return;const r=await sb.from("monthly_income").upsert({household_id:householdId,month:m+"-01",amount:v},{onConflict:"household_id,month"});if(r.error)return;await refreshCloud()};
-$("expenseForm").onsubmit=async e=>{e.preventDefault();const amount=Number($("amount").value);if(!Number.isFinite(amount)||amount<=0||!$("accountSelect").value){$("expenseStatus").textContent="Add an account first.";return}const row={household_id:householdId,added_by:user.id,date:$("date").value,time:$("time").value||null,amount,account_id:$("accountSelect").value,category:$("category").value,merchant:$("merchant").value.trim()||null,payment:$("payment").value,note:$("note").value.trim()||null};const r=await sb.from("expenses").insert(row);if(r.error){$("expenseStatus").textContent=r.error.message;return}e.target.reset();$("date").value=today;$("time").value=new Date().toTimeString().slice(0,5);window.neonReceipt=null;$("imagePreview").innerHTML="";await refreshCloud();$("expenseStatus").textContent="Saved";setTimeout(()=>$("expenseStatus").textContent="",1000)};
+$("expenseForm").onsubmit=async e=>{
+  e.preventDefault();
+  const amount=Number($("amount").value);
+  if(!Number.isFinite(amount)||amount<=0||!$("accountSelect").value){
+    $("expenseStatus").textContent="Add an account first.";
+    return;
+  }
+  const row={
+    household_id:householdId,added_by:user.id,date:$("date").value,time:$("time").value||null,
+    amount,account_id:$("accountSelect").value,category:$("category").value,
+    merchant:$("merchant").value.trim()||null,payment:$("payment").value,
+    note:$("note").value.trim()||null
+  };
+  const receiptUrl=await v182UploadReceipt();
+  if(receiptUrl)row.attachment_url=receiptUrl;
+
+  let r=await sb.from("expenses").insert(row);
+  if(r.error&&row.attachment_url&&/attachment_url|column/i.test(r.error.message||"")){
+    delete row.attachment_url;
+    r=await sb.from("expenses").insert(row);
+  }
+  if(r.error){
+    $("expenseStatus").textContent=r.error.message;
+    return;
+  }
+
+  e.target.reset();
+  $("date").value=today;
+  $("time").value=new Date().toTimeString().slice(0,5);
+  window.neonReceipt=null;
+  if($("imagePreview"))$("imagePreview").innerHTML="";
+  await refreshCloud();
+  $("expenseStatus").textContent="Saved";
+  setTimeout(()=>$("expenseStatus").textContent="",1000);
+};
 $("expenseList").onclick=async e=>{const id=e.target.dataset.delExpense;if(!id)return;const r=await sb.from("expenses").delete().eq("id",id).eq("household_id",householdId);if(!r.error)await refreshCloud()};
 $("accountForm").onsubmit=async e=>{e.preventDefault();const name=$("accountName").value.trim(),bal=Number($("accountBalance").value);if(!name||!Number.isFinite(bal))return;const r=await sb.from("accounts").insert({household_id:householdId,name,type:$("accountType").value,starting_balance:bal,accent:$("accountAccent").value});if(r.error)return;e.target.reset();await refreshCloud()};
 $("budgetForm").onsubmit=async e=>{e.preventDefault();const m=$("budgetMonth").value,c=$("budgetCat").value,v=Number($("budgetAmount").value);if(!m||!c||!Number.isFinite(v)||v<0)return;const r=await sb.from("budgets").upsert({household_id:householdId,month:m+"-01",category:c,amount:v},{onConflict:"household_id,month,category"});if(r.error)return;e.target.reset();$("budgetMonth").value=m;await refreshCloud()};
 $("catForm").onsubmit=async e=>{e.preventDefault();const name=$("newCat").value.trim();if(!name)return;const r=await sb.from("categories").insert({household_id:householdId,name});if(r.error)return;e.target.reset();await refreshCloud()};
 $("backupBtn").onclick=()=>{const a=document.createElement("a"),u=URL.createObjectURL(new Blob([JSON.stringify({exported_at:new Date().toISOString(),...data},null,2)],{type:"application/json"}));a.href=u;a.download="neonledger-backup-"+today+".json";a.click();setTimeout(()=>URL.revokeObjectURL(u),900)};
+
+function v182OpenExpensePage(){
+  const tab=document.querySelector('.tab[data-page="allExpenses"]');
+  if(tab)tab.click();
+}
+function v182OpenAddExpense(){
+  const tab=document.querySelector('.tab[data-page="expenses"]');
+  if(tab)tab.click();
+  const now=new Date();
+  if($("date"))$("date").value=now.toISOString().slice(0,10);
+  if($("time"))$("time").value=now.toTimeString().slice(0,5);
+  setTimeout(()=>$("amount")?.focus(),80);
+}
+document.addEventListener("keydown",e=>{
+  const card=e.target.closest("[data-v182-expense]");
+  if(card&&(e.key==="Enter"||e.key===" ")){
+    e.preventDefault();
+    const open=card.classList.toggle("expanded");
+    card.setAttribute("aria-expanded",String(open));
+  }
+});
+document.addEventListener("click",async e=>{
+  const card=e.target.closest("[data-v182-expense]");
+  if(card&&!e.target.closest("button")&&!e.target.closest("a")){
+    const open=card.classList.toggle("expanded");
+    card.setAttribute("aria-expanded",String(open));
+    return;
+  }
+  const del=e.target.dataset.delHistoryExpense;
+  if(del){
+    if(!confirm("Delete this expense?"))return;
+    const r=await sb.from("expenses").delete().eq("id",del).eq("household_id",householdId);
+    if(!r.error)await refreshCloud();
+    else toast("Could not delete expense");
+  }
+});
+$("viewAllExpenses")?.addEventListener("click",v182OpenExpensePage);
+$("allExpensesAdd")?.addEventListener("click",v182OpenAddExpense);
 document.addEventListener("click",async e=>{
   const a=e.target.dataset.delAccount;if(a){if(!confirm("Remove this account? Existing expenses remain in history."))return;const r=await sb.from("accounts").delete().eq("id",a).eq("household_id",householdId);if(!r.error)await refreshCloud()}
   const b=e.target.dataset.delBudget;if(b){const [m,c]=b.split("|"),r=await sb.from("budgets").delete().eq("household_id",householdId).eq("month",m+"-01").eq("category",c);if(!r.error)await refreshCloud()}
@@ -293,4 +448,5 @@ establishSession().catch(()=>{
 });
 setTimeout(()=>{const s=$("splash");if(s){s.style.opacity="0";s.style.pointerEvents="none";setTimeout(()=>s.remove(),250)}},900);
 })();
+
 </script>
