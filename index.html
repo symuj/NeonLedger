@@ -351,7 +351,6 @@ establishSession().catch(()=>{
   else{$("connectionStatus").textContent="Not signed in";render()}
 });
 setTimeout(()=>{const s=$("splash");if(s){s.style.opacity="0";s.style.pointerEvents="none";setTimeout(()=>s.remove(),250)}},900);
-})();
 
 setTimeout(()=>{
   const home=$("homeAddExpense");
@@ -379,6 +378,8 @@ setTimeout(()=>{
   const source=$("expenseList");
   if(source&&!window.v185Observer){window.v185Observer=new MutationObserver(()=>v185BuildHistory());window.v185Observer.observe(source,{childList:true,subtree:true});}
 },0);
+
+})();
 
 </script>
 </body>
