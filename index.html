@@ -146,6 +146,7 @@ function restorePage(id){
   window.scrollTo(0,0);
 }
 function nameFor(uid){return members[uid]||(uid===user?.id?(user?.user_metadata?.display_name||(user?.email||"").split("@")[0]):"Unknown user")}
+function toast(msg){const t=$("toast");if(!t)return;t.textContent=msg;t.classList.add("show");clearTimeout(t._hideTimer);t._hideTimer=setTimeout(()=>t.classList.remove("show"),2400);}
 function authPaint(){
   const ok=!!session;
   $("authBtn").textContent=ok?"Sign out":"Sign in";
@@ -305,20 +306,78 @@ $("joinHouse").onclick=async()=>{
   if(m.error){$("houseMsg").textContent=m.error.message;return}
   householdId=h.data[0].id;$("houseDialog").close();await establishSession();
 };
-$("saveDisplayName").onclick=async()=>{const nm=$("displayName").value.trim();if(!nm)return;const r=await sb.from("household_members").update({display_name:nm}).eq("household_id",householdId).eq("user_id",user.id);if(r.error){$("nameMsg").textContent=r.error.message;return}members[user.id]=nm;$("nameDialog").close();await refreshCloud()};
+$("saveDisplayName").onclick=async()=>{
+  const nm=$("displayName").value.trim();if(!nm)return;
+  if(!sb||!session||!householdId){toast("Sign in and set up a household first.");return}
+  try{
+    const r=await sb.from("household_members").update({display_name:nm}).eq("household_id",householdId).eq("user_id",user.id);
+    if(r.error){toast(r.error.message);return}
+    members[user.id]=nm;$("nameDialog").close();await refreshCloud();
+  }catch(err){toast("Couldn't save name: "+(err?.message||"unexpected error"))}
+};
 $("saveIncome").onclick=async()=>{const m=$("month").value,v=Number($("income").value);if(!m||!Number.isFinite(v)||v<0)return;const r=await sb.from("monthly_income").upsert({household_id:householdId,month:m+"-01",amount:v},{onConflict:"household_id,month"});if(r.error)return;await refreshCloud()};
-$("expenseForm").onsubmit=async e=>{e.preventDefault();const amount=Number($("amount").value);if(!Number.isFinite(amount)||amount<=0||!$("accountSelect").value){$("expenseStatus").textContent="Add an account first.";return}const row={household_id:householdId,added_by:user.id,date:$("date").value,time:$("time").value||null,amount,account_id:$("accountSelect").value,category:$("category").value,merchant:$("merchant").value.trim()||null,payment:$("payment").value,note:$("note").value.trim()||null};async function v185ReceiptUpload(){
-  const f=window.neonReceipt;if(!f||!householdId)return null;if(f.size>6*1024*1024)return null;
-  const ext=(f.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,6)||"jpg";
-  const path=householdId+"/"+crypto.randomUUID()+"."+ext;
-  const up=await sb.storage.from("expense-receipts").upload(path,f,{contentType:f.type||"image/jpeg",upsert:false});
-  if(up.error)return null;return sb.storage.from("expense-receipts").getPublicUrl(path).data.publicUrl;
-}
-const receiptUrl=await v185ReceiptUpload();if(receiptUrl)row.attachment_url=receiptUrl;const r=await sb.from("expenses").insert(row);if(r.error){$("expenseStatus").textContent=r.error.message;return}e.target.reset();$("date").value=today;$("time").value=new Date().toTimeString().slice(0,5);window.neonReceipt=null;$("imagePreview").innerHTML="";await refreshCloud();$("expenseStatus").textContent="Saved";setTimeout(()=>$("expenseStatus").textContent="",1000)};
+$("expenseForm").onsubmit=async e=>{
+  e.preventDefault();
+  $("expenseStatus").textContent="";
+  if(!sb){$("expenseStatus").textContent="Not connected — Supabase failed to load.";return}
+  if(!session||!user){$("expenseStatus").textContent="You're signed out. Sign in first.";return}
+  if(!householdId){$("expenseStatus").textContent="Create or join a household first.";return}
+  const amount=Number($("amount").value);
+  if(!Number.isFinite(amount)||amount<=0||!$("accountSelect").value){$("expenseStatus").textContent="Add an account first.";return}
+  const row={household_id:householdId,added_by:user.id,date:$("date").value,time:$("time").value||null,amount,account_id:$("accountSelect").value,category:$("category").value,merchant:$("merchant").value.trim()||null,payment:$("payment").value,note:$("note").value.trim()||null};
+  try{
+    $("expenseStatus").textContent="Saving…";
+    async function v185ReceiptUpload(){
+      const f=window.neonReceipt;if(!f||!householdId)return null;if(f.size>6*1024*1024)return null;
+      const ext=(f.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,6)||"jpg";
+      const path=householdId+"/"+crypto.randomUUID()+"."+ext;
+      const up=await sb.storage.from("expense-receipts").upload(path,f,{contentType:f.type||"image/jpeg",upsert:false});
+      if(up.error)return null;return sb.storage.from("expense-receipts").getPublicUrl(path).data.publicUrl;
+    }
+    const receiptUrl=await v185ReceiptUpload();if(receiptUrl)row.attachment_url=receiptUrl;
+    const r=await sb.from("expenses").insert(row);
+    if(r.error){$("expenseStatus").textContent=r.error.message;return}
+    e.target.reset();$("date").value=today;$("time").value=new Date().toTimeString().slice(0,5);window.neonReceipt=null;$("imagePreview").innerHTML="";
+    await refreshCloud();
+    $("expenseStatus").textContent="Saved";setTimeout(()=>$("expenseStatus").textContent="",1500);
+  }catch(err){
+    $("expenseStatus").textContent="Couldn't save: "+(err?.message||"unexpected error");
+  }
+};
 $("expenseList").onclick=async e=>{const id=e.target.dataset.delExpense;if(!id)return;const r=await sb.from("expenses").delete().eq("id",id).eq("household_id",householdId);if(!r.error)await refreshCloud()};
-$("accountForm").onsubmit=async e=>{e.preventDefault();const name=$("accountName").value.trim(),bal=Number($("accountBalance").value);if(!name||!Number.isFinite(bal))return;const r=await sb.from("accounts").insert({household_id:householdId,name,type:$("accountType").value,starting_balance:bal,accent:$("accountAccent").value});if(r.error)return;e.target.reset();await refreshCloud()};
-$("budgetForm").onsubmit=async e=>{e.preventDefault();const m=$("budgetMonth").value,c=$("budgetCat").value,v=Number($("budgetAmount").value);if(!m||!c||!Number.isFinite(v)||v<0)return;const r=await sb.from("budgets").upsert({household_id:householdId,month:m+"-01",category:c,amount:v},{onConflict:"household_id,month,category"});if(r.error)return;e.target.reset();$("budgetMonth").value=m;await refreshCloud()};
-$("catForm").onsubmit=async e=>{e.preventDefault();const name=$("newCat").value.trim();if(!name)return;const r=await sb.from("categories").insert({household_id:householdId,name});if(r.error)return;e.target.reset();await refreshCloud()};
+$("accountForm").onsubmit=async e=>{
+  e.preventDefault();
+  const name=$("accountName").value.trim(),bal=Number($("accountBalance").value);
+  if(!name||!Number.isFinite(bal))return;
+  if(!sb||!session||!householdId){toast("Sign in and set up a household first.");return}
+  try{
+    const r=await sb.from("accounts").insert({household_id:householdId,name,type:$("accountType").value,starting_balance:bal,accent:$("accountAccent").value});
+    if(r.error){toast(r.error.message);return}
+    e.target.reset();await refreshCloud();toast("Account added");
+  }catch(err){toast("Couldn't add account: "+(err?.message||"unexpected error"))}
+};
+$("budgetForm").onsubmit=async e=>{
+  e.preventDefault();
+  const m=$("budgetMonth").value,c=$("budgetCat").value,v=Number($("budgetAmount").value);
+  if(!m||!c||!Number.isFinite(v)||v<0)return;
+  if(!sb||!session||!householdId){toast("Sign in and set up a household first.");return}
+  try{
+    const r=await sb.from("budgets").upsert({household_id:householdId,month:m+"-01",category:c,amount:v},{onConflict:"household_id,month,category"});
+    if(r.error){toast(r.error.message);return}
+    e.target.reset();$("budgetMonth").value=m;await refreshCloud();
+  }catch(err){toast("Couldn't save budget: "+(err?.message||"unexpected error"))}
+};
+$("catForm").onsubmit=async e=>{
+  e.preventDefault();
+  const name=$("newCat").value.trim();
+  if(!name)return;
+  if(!sb||!session||!householdId){toast("Sign in and set up a household first.");return}
+  try{
+    const r=await sb.from("categories").insert({household_id:householdId,name});
+    if(r.error){toast(r.error.message);return}
+    e.target.reset();await refreshCloud();
+  }catch(err){toast("Couldn't add category: "+(err?.message||"unexpected error"))}
+};
 $("backupBtn").onclick=()=>{const a=document.createElement("a"),u=URL.createObjectURL(new Blob([JSON.stringify({exported_at:new Date().toISOString(),...data},null,2)],{type:"application/json"}));a.href=u;a.download="neonledger-backup-"+today+".json";a.click();setTimeout(()=>URL.revokeObjectURL(u),900)};
 document.addEventListener("click",async e=>{
   const a=e.target.dataset.delAccount;if(a){if(!confirm("Remove this account? Existing expenses remain in history."))return;const r=await sb.from("accounts").delete().eq("id",a).eq("household_id",householdId);if(!r.error)await refreshCloud()}
