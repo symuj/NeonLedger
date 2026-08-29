@@ -54,17 +54,15 @@ input,select,textarea{font-size:16px!important;max-width:100%!important;min-widt
 .category-search{margin-bottom:7px}.image-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}.image-btn{min-height:44px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);border-radius:11px;font-weight:750}.expense-image-preview{display:flex;gap:7px;align-items:center;margin-top:8px}.expense-image-thumb{width:74px;height:74px;object-fit:cover;border-radius:11px;border:1px solid var(--line)}
 .signed-out-screen{position:fixed;inset:0;z-index:500;min-height:100dvh;display:grid;place-items:center;padding:24px 15px;background:var(--bg)}.signin-card{width:min(390px,100%);text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:30px 20px;box-shadow:var(--shadow2)}.signin-logo{width:82px;height:82px;border-radius:25px;margin:0 auto 15px;display:grid;place-items:center;background:linear-gradient(140deg,var(--brand),var(--violet));color:#fff;font-size:30px;font-weight:950}.signin-title{font-size:26px;font-weight:950;color:var(--ink);letter-spacing:-.05em}.signin-sub{font-size:10px;color:var(--muted);margin:5px 0 20px}
 @media(max-width:620px){body{overflow:hidden!important}.app{height:100dvh;display:flex;flex-direction:column;padding:calc(7px + env(safe-area-inset-top)) 9px calc(88px + env(safe-area-inset-bottom));overflow:hidden}.topbar{flex:0 0 auto}.page{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:8px}.formgrid,.account-grid{grid-template-columns:1fr!important}.chips{grid-template-columns:1fr!important}.card,.account,.expense,.item{min-width:0;max-width:100%;overflow:hidden}.dialog{width:calc(100vw - 18px)!important;max-width:calc(100vw - 18px)!important}.dialog .modal{max-height:calc(100dvh - 24px);overflow:auto}}
-</style><style id="v184-style">
-.v184-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.v184-title h2{margin:0}
-.v184-history-head{display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:8px}.v184-history-list{display:flex;flex-direction:column;gap:8px}
-.v184-item{background:var(--surface2);border:1px solid var(--line);border-radius:15px;padding:11px;cursor:pointer;overflow:hidden}
-.v184-summary{display:flex;align-items:center;gap:9px}.v184-main{min-width:0;flex:1}.v184-name{font-size:13px;font-weight:900;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.v184-meta{font-size:10px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v184-amount{font-size:14px;font-weight:950;color:var(--ink);white-space:nowrap}.v184-chevron{font-size:19px;color:var(--muted);transition:.18s}
-.v184-item.expanded .v184-chevron{transform:rotate(90deg)}.v184-details{display:none;border-top:1px solid var(--line);margin-top:10px;padding-top:10px}.v184-item.expanded .v184-details{display:block}
-.v184-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.v184-detail{background:var(--surface);border-radius:10px;padding:8px}.v184-detail small{display:block;color:var(--muted);font-size:9px;margin-bottom:2px}.v184-detail strong{display:block;color:var(--ink);font-size:11px;word-break:break-word}
-.v184-receipt{display:block;width:100%;max-height:320px;object-fit:contain;border-radius:13px;border:1px solid var(--line);margin-top:9px;background:var(--surface)}
-.v184-empty{text-align:center;padding:25px 10px;color:var(--muted);font-size:12px}
-@media(max-width:620px){.v184-grid{grid-template-columns:1fr 1fr}.v184-receipt{max-height:270px}}
+</style><style id="v185-style">
+.v185-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}.v185-title h2{margin:0}
+.v185-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;font-size:12px}.v185-list{display:flex;flex-direction:column;gap:9px}
+.v185-item{background:var(--surface2);border:1px solid var(--line);border-radius:16px;padding:12px;cursor:pointer;overflow:hidden}
+.v185-summary{display:flex;align-items:center;gap:9px}.v185-main{min-width:0;flex:1}.v185-name{font-size:13px;font-weight:900;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v185-meta{font-size:10px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.v185-amount{font-size:14px;font-weight:950;color:var(--ink);white-space:nowrap}.v185-chevron{font-size:20px;color:var(--muted);transition:transform .18s}
+.v185-item.expanded .v185-chevron{transform:rotate(90deg)}.v185-details{display:none;border-top:1px solid var(--line);margin-top:10px;padding-top:10px}.v185-item.expanded .v185-details{display:block}
+.v185-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.v185-detail{background:var(--surface);border-radius:10px;padding:8px}.v185-detail small{display:block;color:var(--muted);font-size:9px;margin-bottom:2px}.v185-detail strong{display:block;color:var(--ink);font-size:11px;word-break:break-word}
+.v185-empty{text-align:center;padding:28px 10px;color:var(--muted);font-size:12px}
 </style></head>
 <body>
 <div class="splash" id="splash"><div class="splash-inner"><div class="splash-logo">₿</div><div class="splash-title">NeonLedger</div><div class="splash-sub">SHARED • LIVE • PRIVATE FINANCE</div><div class="splash-load"><i></i></div></div></div>
@@ -88,12 +86,12 @@ input,select,textarea{font-size:16px!important;max-width:100%!important;min-widt
 </div><div class="card" style="margin-top:13px"><div class="head"><h2>Accounts & cards</h2><button class="btn small tonal" id="goAccounts">＋ Add</button></div><div class="account-grid" id="dashboardAccounts"></div></div></section>
 
 <section class="page" id="expenses">
-<div class="card"><div class="head"><h2>New expense</h2><span id="expenseStatus" class="status"></span></div><form id="expenseForm"><div class="formgrid"><div class="field"><label>Date</label><input id="date" type="date" required></div><div class="field"><label>Time</label><input id="time" type="time"></div><div class="field"><label>Amount</label><input id="amount" type="number" min=".01" step=".01" inputmode="decimal" required></div><div class="field"><label>Paid from</label><select id="accountSelect" required></select></div><div class="field"><label>Category</label><input id="categorySearch" class="category-search" placeholder="Type to find a category" autocomplete="off"><select id="category" required></select></div><div class="field"><label>Payment</label><select id="payment"><option>UPI</option><option>Cash</option><option>Credit Card</option><option>Debit Card</option><option>Bank Transfer</option><option>Wallet</option><option>Auto-debit</option><option>Other</option></select></div><div class="field" style="grid-column:1/-1"><label>Receipt / expense image</label><input id="imageInput" type="file" accept="image/*" hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><div class="image-actions"><button type="button" class="image-btn" id="uploadImageBtn">Upload from Files</button><button type="button" class="image-btn" id="cameraImageBtn">Take Photo</button></div><div id="imagePreview" class="expense-image-preview"></div></div><div class="field"><label>Merchant / Payee</label><input id="merchant" maxlength="100"></div><div class="field"><label>Note</label><input id="note" maxlength="300"></div></div><button class="btn primary" style="width:100%;margin-top:11px">＋ Add Expense</button></form></div>
+<div class="card"><div class="head"><h2>New expense</h2><span id="expenseStatus" class="status"></span></div><form id="expenseForm"><div class="formgrid"><div class="field"><label>Date</label><input id="date" type="date" required></div><div class="field"><label>Time</label><input id="time" type="time"></div><div class="field"><label>Amount</label><input id="amount" type="number" min=".01" step=".01" inputmode="decimal" required></div><div class="field"><label>Paid from</label><select id="accountSelect" required></select></div><div class="field"><label>Category</label><input id="categorySearch" class="category-search" placeholder="Type to find a category" autocomplete="off"><select id="category" required></select></div><div class="field"><label>Payment</label><select id="payment"><option>UPI</option><option>Cash</option><option>Credit Card</option><option>Debit Card</option><option>Bank Transfer</option><option>Wallet</option><option>Auto-debit</option><option>Other</option></select></div><div class="field" style="grid-column:1/-1"><label>Receipt / expense image</label><input id="imageInput" type="file" accept="image/*" hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><div class="image-actions"><button type="button" class="image-btn" id="uploadImageBtn">Upload from Files</button><button type="button" class="image-btn" id="cameraImageBtn">Take Photo</button></div><div id="imagePreview" class="expense-image-preview"></div></div><div class="field"><label>Merchant / Payee</label><input id="merchant" maxlength="100"></div><div class="field"><label>Note</label><input id="note" maxlength="300"></div></div><button class="btn primary" style="width:100%;margin-top:11px">＋ Add Expense</button></form><button class="btn tonal" id="v185ViewAll" type="button" style="width:100%;margin-top:10px">View All Expenses</button></div>
 <div class="card" style="margin-top:13px"><div class="head"><h2>Expenses</h2><span id="count" class="muted"></span></div><div class="toolbar"><div class="field"><label>From</label><input id="from" type="date"></div><div class="field"><label>To</label><input id="to" type="date"></div><div class="field"><label>Category</label><select id="filterCat"></select></div></div><div class="field" style="margin:8px 0 11px"><label>Search</label><input id="search" placeholder="Search expenses…"></div><div class="list" id="expenseList"></div></div></section>
 
 <section class="page" id="allExpenses">
-<div class="v184-title"><h2>Expenses</h2><button class="btn small primary" id="v184AddExpense" type="button">＋ Add Expense</button></div>
-<div class="card"><div class="v184-history-head"><span>All expenses</span><span id="v184Count" class="muted"></span></div><div id="v184ExpenseList" class="v184-history-list"></div></div>
+<div class="v185-title"><div><h2>Expenses</h2><div class="muted">All household expenses</div></div><button class="btn small primary" id="v185AddExpense" type="button">＋ Add Expense</button></div>
+<div class="card"><div class="v185-head"><strong>Expense history</strong><span id="v185Count" class="muted"></span></div><div id="v185List" class="v185-list"></div></div>
 </section>
 <section class="page" id="accounts"><div class="card"><div class="head"><h2>Cards & accounts</h2><span class="muted">Track every balance</span></div><form id="accountForm"><div class="formgrid"><div class="field"><label>Name</label><input id="accountName" maxlength="50" placeholder="Main Bank / Visa / Cash" required></div><div class="field"><label>Type</label><select id="accountType"><option>Bank Account</option><option>Credit Card</option><option>Debit Card</option><option>Cash</option><option>Wallet</option><option>Savings</option><option>Investment</option><option>Other</option></select></div><div class="field"><label>Starting balance</label><input id="accountBalance" type="number" step=".01" inputmode="decimal" required></div><div class="field"><label>Accent</label><select id="accountAccent"><option value="brand">Blue</option><option value="violet">Violet</option><option value="gold">Gold</option><option value="green">Green</option></select></div></div><button class="btn primary" style="width:100%;margin-top:11px">＋ Add Account</button></form></div><div class="card" style="margin-top:13px"><div class="head"><h2>Current balances</h2></div><div class="account-grid" id="accountGrid"></div></div></section>
 
@@ -108,9 +106,7 @@ input,select,textarea{font-size:16px!important;max-width:100%!important;min-widt
 
 <dialog class="dialog" id="houseDialog"><div class="modal"><div class="head"><div style="font-size:16px;font-weight:850">Shared household</div></div><div class="note">Create a household once, or join your partner's household with an invite code.</div><div class="field" style="margin-top:11px"><label>Household name</label><input id="houseName" value="Our Household"></div><button class="btn primary" id="createHouse" style="width:100%;margin-top:10px">Create Household</button><div style="text-align:center;color:var(--muted);margin:9px">or join</div><div class="field"><label>Invite code</label><input id="inviteCode" placeholder="ABC123"></div><button class="btn" id="joinHouse" style="width:100%;margin-top:9px">Join Household</button><div id="houseMsg" class="msg"></div></div></dialog>
 
-<dialog class="dialog" id="nameDialog"><div class="modal"><div class="head"><div style="font-size:16px;font-weight:850">Display name</div></div><div class="muted">This name appears beside expenses you add.</div><div class="field" style="margin-top:11px"><label>Name</label><input id="displayName" maxlength="50"></div><button class="btn primary" id="saveDisplayName" style="width:100%;margin-top:10px">Save Name</button><div id="nameMsg" class="msg"></div></div></dialog>
-
-<script>
+<dialog class="dialog" id="nameDialog"><div class="modal"><div class="head"><div style="font-size:16px;font-weight:850">Display name</div></div><div class="muted">This name appears beside expenses you add.</div><div class="field" style="margin-top:11px"><label>Name</label><input id="displayName" maxlength="50"></div><button class="btn primary" id="saveD<script>
 (function(){
 "use strict";
 
@@ -137,7 +133,16 @@ function save(){try{localStorage.setItem(STORE,JSON.stringify(data))}catch{}}
 function load(){try{const x=JSON.parse(localStorage.getItem(STORE)||"null");if(x)data={...data,...x,categories:[...new Set([...defaults,...(x.categories||[])])],accounts:x.accounts||[],expenses:x.expenses||[],incomes:x.incomes||{},budgets:x.budgets||{}}}catch{}}
 function clearPrivateData(){data={categories:[...defaults],accounts:[],expenses:[],incomes:{},budgets:{}};members={};householdId=null}
 function activePage(){return document.querySelector(".page.active")?.id||"overview"}
-function restorePage(id){const target=document.querySelector(`.tab[data-page="${id}"]`);if(target)target.click()}
+function restorePage(id){
+  const page=document.querySelector(`.page#${id}`);
+  if(!page)return;
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  page.classList.add("active");
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+  const tab=document.querySelector(`.tab[data-page="${id}"]`);
+  if(tab)tab.classList.add("active");
+  window.scrollTo(0,0);
+}
 function nameFor(uid){return members[uid]||(uid===user?.id?(user?.user_metadata?.display_name||(user?.email||"").split("@")[0]):"Unknown user")}
 function authPaint(){
   const ok=!!session;
@@ -147,34 +152,34 @@ function authPaint(){
   if(ok){const nm=nameFor(user.id);$("userLabel").textContent=nm;$("userAvatar").textContent=(nm[0]||"?").toUpperCase()}
 }
 
-function v184BuildHistory(){
- const target=$("v184ExpenseList"),source=$("expenseList");if(!target||!source)return;
- const cards=[...source.querySelectorAll(".expense")];
- $("v184Count").textContent=cards.length+(cards.length===1?" expense":" expenses");
- if(!cards.length){target.innerHTML=`<div class="v184-empty">No expenses yet.</div>`;return;}
- target.innerHTML=cards.map((card,i)=>{
-  const title=card.querySelector(".expense-title")?.textContent||"Expense";
-  const meta=card.querySelector(".muted")?.textContent||"";
-  const amount=card.querySelector(".amount")?.textContent||"";
-  const chips=[...card.querySelectorAll(".chip")].map(x=>x.textContent.trim());
-  const account=chips.find(x=>/^From\s/i.test(x))||"Account unavailable";
-  const added=chips.find(x=>/^Added by\s/i.test(x))||"Added by unavailable";
-  const payment=chips.find(x=>x!==account&&x!==added)||"";
-  const del=card.querySelector("[data-del-expense]")?.dataset.delExpense||"";
-  return `<article class="v184-item" tabindex="0" role="button" aria-expanded="false" data-v184-card>
-   <div class="v184-summary"><div class="v184-main"><div class="v184-name">${title}</div><div class="v184-meta">${meta} · ${added.replace(/^Added by\s*/i,"")}</div></div><div class="v184-amount">${amount}</div><span class="v184-chevron">›</span></div>
-   <div class="v184-details"><div class="v184-grid">
-    <div class="v184-detail"><small>Amount</small><strong>${amount||"—"}</strong></div>
-    <div class="v184-detail"><small>Category / Merchant</small><strong>${title||"—"}</strong></div>
-    <div class="v184-detail"><small>Account / Card</small><strong>${account.replace(/^From\s*/i,"")}</strong></div>
-    <div class="v184-detail"><small>Added by</small><strong>${added.replace(/^Added by\s*/i,"")}</strong></div>
-    <div class="v184-detail"><small>Date / Time</small><strong>${meta||"—"}</strong></div>
-    <div class="v184-detail"><small>Payment</small><strong>${payment||"—"}</strong></div>
-   </div>${del?`<div style="text-align:right;margin-top:8px"><button class="btn small" type="button" data-v184-delete="${del}">Delete</button></div>`:""}</div>
-  </article>`;
- }).join("");
+function v185BuildHistory(){
+  const target=$("v185List"),source=$("expenseList");
+  if(!target||!source)return;
+  const cards=[...source.querySelectorAll(".expense")];
+  $("v185Count").textContent=cards.length+(cards.length===1?" expense":" expenses");
+  if(!cards.length){target.innerHTML=`<div class="v185-empty">No expenses yet.</div>`;return;}
+  target.innerHTML=cards.map((card)=>{
+    const title=card.querySelector(".expense-title")?.textContent||"Expense";
+    const meta=card.querySelector(".muted")?.textContent||"";
+    const amount=card.querySelector(".amount")?.textContent||"";
+    const chips=[...card.querySelectorAll(".chip")].map(x=>x.textContent.trim());
+    const account=chips.find(x=>/^From\s/i.test(x))||"Not available";
+    const added=chips.find(x=>/^Added by\s/i.test(x))||"Not available";
+    const payment=chips.find(x=>x!==account&&x!==added)||"Not specified";
+    return `<article class="v185-item" tabindex="0" role="button" aria-expanded="false" data-v185-card>
+      <div class="v185-summary"><div class="v185-main"><div class="v185-name">${title}</div><div class="v185-meta">${meta} · ${added.replace(/^Added by\s*/i,"")}</div></div><div class="v185-amount">${amount}</div><span class="v185-chevron">›</span></div>
+      <div class="v185-details"><div class="v185-grid">
+        <div class="v185-detail"><small>Amount</small><strong>${amount||"—"}</strong></div>
+        <div class="v185-detail"><small>Category / Merchant</small><strong>${title||"—"}</strong></div>
+        <div class="v185-detail"><small>Account / Card</small><strong>${account.replace(/^From\s*/i,"")}</strong></div>
+        <div class="v185-detail"><small>Added by</small><strong>${added.replace(/^Added by\s*/i,"")}</strong></div>
+        <div class="v185-detail"><small>Date / Time</small><strong>${meta||"—"}</strong></div>
+        <div class="v185-detail"><small>Payment</small><strong>${payment}</strong></div>
+      </div></div>
+    </article>`;
+  }).join("");
 }
-v184BuildHistory();
+v185BuildHistory();
 
 function render(){
   const signed=!!session;
@@ -300,14 +305,14 @@ $("joinHouse").onclick=async()=>{
 };
 $("saveDisplayName").onclick=async()=>{const nm=$("displayName").value.trim();if(!nm)return;const r=await sb.from("household_members").update({display_name:nm}).eq("household_id",householdId).eq("user_id",user.id);if(r.error){$("nameMsg").textContent=r.error.message;return}members[user.id]=nm;$("nameDialog").close();await refreshCloud()};
 $("saveIncome").onclick=async()=>{const m=$("month").value,v=Number($("income").value);if(!m||!Number.isFinite(v)||v<0)return;const r=await sb.from("monthly_income").upsert({household_id:householdId,month:m+"-01",amount:v},{onConflict:"household_id,month"});if(r.error)return;await refreshCloud()};
-$("expenseForm").onsubmit=async e=>{e.preventDefault();const amount=Number($("amount").value);if(!Number.isFinite(amount)||amount<=0||!$("accountSelect").value){$("expenseStatus").textContent="Add an account first.";return}const row={household_id:householdId,added_by:user.id,date:$("date").value,time:$("time").value||null,amount,account_id:$("accountSelect").value,category:$("category").value,merchant:$("merchant").value.trim()||null,payment:$("payment").value,note:$("note").value.trim()||null};async function v184ReceiptUpload(){
- const f=window.neonReceipt;if(!f||!householdId)return null;if(f.size>6*1024*1024)return null;
- const ext=(f.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,6)||"jpg";
- const path=householdId+"/"+crypto.randomUUID()+"."+ext;
- const up=await sb.storage.from("expense-receipts").upload(path,f,{contentType:f.type||"image/jpeg",upsert:false});
- if(up.error)return null;return sb.storage.from("expense-receipts").getPublicUrl(path).data.publicUrl;
+$("expenseForm").onsubmit=async e=>{e.preventDefault();const amount=Number($("amount").value);if(!Number.isFinite(amount)||amount<=0||!$("accountSelect").value){$("expenseStatus").textContent="Add an account first.";return}const row={household_id:householdId,added_by:user.id,date:$("date").value,time:$("time").value||null,amount,account_id:$("accountSelect").value,category:$("category").value,merchant:$("merchant").value.trim()||null,payment:$("payment").value,note:$("note").value.trim()||null};async function v185ReceiptUpload(){
+  const f=window.neonReceipt;if(!f||!householdId)return null;if(f.size>6*1024*1024)return null;
+  const ext=(f.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"").slice(0,6)||"jpg";
+  const path=householdId+"/"+crypto.randomUUID()+"."+ext;
+  const up=await sb.storage.from("expense-receipts").upload(path,f,{contentType:f.type||"image/jpeg",upsert:false});
+  if(up.error)return null;return sb.storage.from("expense-receipts").getPublicUrl(path).data.publicUrl;
 }
-const receiptUrl=await v184ReceiptUpload();if(receiptUrl)row.attachment_url=receiptUrl;const r=await sb.from("expenses").insert(row);if(r.error){$("expenseStatus").textContent=r.error.message;return}e.target.reset();$("date").value=today;$("time").value=new Date().toTimeString().slice(0,5);window.neonReceipt=null;$("imagePreview").innerHTML="";await refreshCloud();$("expenseStatus").textContent="Saved";setTimeout(()=>$("expenseStatus").textContent="",1000)};
+const receiptUrl=await v185ReceiptUpload();if(receiptUrl)row.attachment_url=receiptUrl;const r=await sb.from("expenses").insert(row);if(r.error){$("expenseStatus").textContent=r.error.message;return}e.target.reset();$("date").value=today;$("time").value=new Date().toTimeString().slice(0,5);window.neonReceipt=null;$("imagePreview").innerHTML="";await refreshCloud();$("expenseStatus").textContent="Saved";setTimeout(()=>$("expenseStatus").textContent="",1000)};
 $("expenseList").onclick=async e=>{const id=e.target.dataset.delExpense;if(!id)return;const r=await sb.from("expenses").delete().eq("id",id).eq("household_id",householdId);if(!r.error)await refreshCloud()};
 $("accountForm").onsubmit=async e=>{e.preventDefault();const name=$("accountName").value.trim(),bal=Number($("accountBalance").value);if(!name||!Number.isFinite(bal))return;const r=await sb.from("accounts").insert({household_id:householdId,name,type:$("accountType").value,starting_balance:bal,accent:$("accountAccent").value});if(r.error)return;e.target.reset();await refreshCloud()};
 $("budgetForm").onsubmit=async e=>{e.preventDefault();const m=$("budgetMonth").value,c=$("budgetCat").value,v=Number($("budgetAmount").value);if(!m||!c||!Number.isFinite(v)||v<0)return;const r=await sb.from("budgets").upsert({household_id:householdId,month:m+"-01",category:c,amount:v},{onConflict:"household_id,month,category"});if(r.error)return;e.target.reset();$("budgetMonth").value=m;await refreshCloud()};
@@ -347,13 +352,32 @@ setTimeout(()=>{const s=$("splash");if(s){s.style.opacity="0";s.style.pointerEve
 })();
 
 setTimeout(()=>{
- $("v184AddExpense")?.addEventListener("click",()=>restorePage("expenses"));
- document.addEventListener("keydown",e=>{const c=e.target.closest("[data-v184-card]");if(c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();const o=c.classList.toggle("expanded");c.setAttribute("aria-expanded",String(o));}});
- document.addEventListener("click",e=>{
-  const c=e.target.closest("[data-v184-card]");
-  if(c&&!e.target.closest("button")&&!e.target.closest("a")){const o=c.classList.toggle("expanded");c.setAttribute("aria-expanded",String(o));}
- });
- const src=$("expenseList");if(src&&!window.v184Observer){window.v184Observer=new MutationObserver(v184BuildHistory);window.v184Observer.observe(src,{childList:true,subtree:true});}
+  const home=$("homeAddExpense");
+  if(home)home.onclick=()=>{
+    const now=new Date();
+    $("date").value=now.toISOString().slice(0,10);
+    $("time").value=now.toTimeString().slice(0,5);
+    restorePage("expenses");
+    setTimeout(()=>$("amount")?.focus(),80);
+  };
+  const add=$("v185AddExpense");
+  if(add)add.onclick=()=>restorePage("expenses");
+  const view=$("v185ViewAll");
+  if(view)view.onclick=()=>restorePage("allExpenses");
+  document.addEventListener("keydown",e=>{
+    const c=e.target.closest("[data-v185-card]");
+    if(c&&(e.key==="Enter"||e.key===" ")){e.preventDefault();const o=c.classList.toggle("expanded");c.setAttribute("aria-expanded",String(o));}
+  });
+  document.addEventListener("click",e=>{
+    const c=e.target.closest("[data-v185-card]");
+    if(c&&!e.target.closest("button")&&!e.target.closest("a")){
+      const o=c.classList.toggle("expanded");c.setAttribute("aria-expanded",String(o));
+    }
+  });
+  const source=$("expenseList");
+  if(source&&!window.v185Observer){window.v185Observer=new MutationObserver(()=>v185BuildHistory());window.v185Observer.observe(source,{childList:true,subtree:true});}
 },0);
 
+</script>splash");if(s){s.style.opacity="0";s.style.pointerEvents="none";setTimeout(()=>s.remove(),250)}},900);
+})();
 </script>
