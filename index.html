@@ -106,7 +106,9 @@ input,select,textarea{font-size:16px!important;max-width:100%!important;min-widt
 
 <dialog class="dialog" id="houseDialog"><div class="modal"><div class="head"><div style="font-size:16px;font-weight:850">Shared household</div></div><div class="note">Create a household once, or join your partner's household with an invite code.</div><div class="field" style="margin-top:11px"><label>Household name</label><input id="houseName" value="Our Household"></div><button class="btn primary" id="createHouse" style="width:100%;margin-top:10px">Create Household</button><div style="text-align:center;color:var(--muted);margin:9px">or join</div><div class="field"><label>Invite code</label><input id="inviteCode" placeholder="ABC123"></div><button class="btn" id="joinHouse" style="width:100%;margin-top:9px">Join Household</button><div id="houseMsg" class="msg"></div></div></dialog>
 
-<dialog class="dialog" id="nameDialog"><div class="modal"><div class="head"><div style="font-size:16px;font-weight:850">Display name</div></div><div class="muted">This name appears beside expenses you add.</div><div class="field" style="margin-top:11px"><label>Name</label><input id="displayName" maxlength="50"></div><button class="btn primary" id="saveD<script>
+<dialog class="dialog" id="nameDialog"><div class="modal"><div class="head"><div style="font-size:16px;font-weight:850">Display name</div></div><div class="muted">This name appears beside expenses you add.</div><div class="field" style="margin-top:11px"><label>Name</label><input id="displayName" maxlength="50"></div><button class="btn primary" id="saveDisplayName">Save</button></div></dialog>
+
+<script>
 (function(){
 "use strict";
 
@@ -378,6 +380,6 @@ setTimeout(()=>{
   if(source&&!window.v185Observer){window.v185Observer=new MutationObserver(()=>v185BuildHistory());window.v185Observer.observe(source,{childList:true,subtree:true});}
 },0);
 
-</script>splash");if(s){s.style.opacity="0";s.style.pointerEvents="none";setTimeout(()=>s.remove(),250)}},900);
-})();
 </script>
+</body>
+</html>
